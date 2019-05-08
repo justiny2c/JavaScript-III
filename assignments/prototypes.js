@@ -200,7 +200,25 @@
   
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
-  const villain = new Villain({
+  
+  function Villain(attributes){
+    Humanoid.call(this, attributes);
+  }
+
+  Villain.prototype = Object.create(Humanoid.prototype);
+  
+  Villain.prototype.destruction = function(){
+    this.healthpoints -= 3 ;
+     
+    if(this.healthpoints <= 0){
+      return this.destroy();
+      }
+    else{
+      return this.takeDamage();
+    };
+  }
+
+    const villain = new Villain({
     createdAt: new Date(),
     dimensions: {
       length: 2,
@@ -216,18 +234,4 @@
     language: 'English',
   });
 
-function Villain(attributes){
-    Humanoid.call(this, attributes);
-  }
-
-  Villain.prototype = Object.create(Humanoid.prototype);
-  
-  Villain.prototype.destruction = function(){
-    this.healthpoints -= 3 
-    if(this.healthpoints <= 0){
-      return this.destroy();
-      }
-    else{
-      return this.tookDamage();
-    }
-  }
+  console.log(villain.destruction())
